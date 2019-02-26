@@ -9,6 +9,7 @@
 		return 1;		  \
 	}
 
+//使用宏实现泛型
 #define CREAT_STACK(STACK_TYPE, NAME, SIZE) \
 	static STACK_TYPE stack##NAME[SIZE];    \
 	static int top_element##NAME = -1;      \
@@ -19,6 +20,9 @@
 		else								\
 			return 1;						\
 	}
+
+#define CREATE_ARRAY(ARRAY_NAME, ELE_TYPE, N_ELE) \
+	static ELE_TYPE ARRAY_NAME[N_ELE]
 
 
 //泛型简单实现
@@ -40,29 +44,32 @@ void swap1(int *a, int *b)
 
 int main()
 {
-	int NAME(1);
 	char *p = STRING(while);
-	printf("p=%s\n", p);
-	NAME(1) = 1;
+	//printf("p=%s\n", p);
 
 	CREAT_STACK(int, _int, 10)
-	printf("r=%d\n", is_full_int());
-
+	//printf("r=%d\n", is_full_int());
 
 	CREAT(_int, int); //创建可变函数名
-	int a = int_int();
+	//int a = int_int();
+	//printf("a=%d\n", a);
+	
+	CREATE_ARRAY(array, int, 10);
+	printf("buff size = %d\n", sizeof(array));
 
-	printf("a=%d\n", a);
-	printf("%d\n", NAME(1));
-
-	int c = 3;
-	int b = 4;
-	swap((void *)&c, (void *)&b, sizeof(int));
-	printf("c = %d b = %d\n", c, b);
+	CREATE_ARRAY(array1, char, 10);
+	printf("buff size = %d\n", sizeof(array1));
+	
+	int a = 1;
+	int b = 2;
+	printf("before swap:a=%d b=%d\n", a, b);
+	swap((void *)&a, (void *)&b, sizeof(int));
+	printf("after swap:a=%d b=%d\n", a, b);
 
 	char buff[6] = "hello";
 	char buff1[6] = "world";
+	printf("before swap:buff=%s buff1=%s\n", buff, buff1);
 	swap((void *)buff, (void *)buff1, sizeof(buff));
-	printf("%s:%s\n", buff, buff1);
+	printf("after swap:buff=%s buff1=%s\n", buff, buff1);
 	return 0;
 }
